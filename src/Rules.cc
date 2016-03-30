@@ -4,17 +4,16 @@
 
 namespace Color {
 
-IntermediateResult::IntermediateResult( const size_t aSize ) 
+IntermediateResult::IntermediateResult( const size_t aSize )
     : m_RulesOnPositions( aSize )
       , m_IsOpened( false )
 {}
-
 
 void IntermediateResult::putMarker( size_t aIndex, const ColorName aColor )
 {
     increaseSize( aIndex );
     m_RulesOnPositions[ aIndex ].push_back( Marker( m_IsOpened, aColor ) );
-    m_IsOpened = !m_IsOpened; 
+    m_IsOpened = !m_IsOpened;
 }
 
 void IntermediateResult::getMarkers( size_t aIndex, Markers& aRules ) const
@@ -23,9 +22,9 @@ void IntermediateResult::getMarkers( size_t aIndex, Markers& aRules ) const
     {
         return;
     }
-    return aRules.insert( aRules.end()
-                        , m_RulesOnPositions[ aIndex ].begin()
-                        , m_RulesOnPositions[ aIndex ].end() );
+    aRules.insert( aRules.end()
+                    , m_RulesOnPositions[ aIndex ].begin()
+                    , m_RulesOnPositions[ aIndex ].end() );
 }
 
 void IntermediateResult::increaseSize( const size_t aSize )
@@ -36,7 +35,7 @@ void IntermediateResult::increaseSize( const size_t aSize )
     }
 }
 
-Rule::Rule( ColorName aColor, const std::string& aRegex, bool aWholeLines ) 
+Rule::Rule( ColorName aColor, const std::string& aRegex, bool aWholeLines )
     : m_WholeLines( aWholeLines )
       , m_Color( aColor )
       , m_Regex( aRegex )
@@ -97,7 +96,7 @@ void Rule::applyPartial( const std::string& aLine
 }
 
 NumberRule::NumberRule( const ColorName aInitialColor
-        , const uint8_t aSimilarLinesCount ) 
+        , const uint8_t aSimilarLinesCount )
     :  m_SimilarLinesCount( aSimilarLinesCount )
       , m_Colors()
 {
@@ -167,7 +166,7 @@ void ReferenceRule::checkLoops( const std::string& aLine ) const
         m_InvestigatedStringCopy = aLine;
         lSimCounter = 0;
     }
-    else if ( m_InvestigatedStringCopy == aLine 
+    else if ( m_InvestigatedStringCopy == aLine
             && lSimCounter++ > 1000 )
         throw std::runtime_error( "It seems that there is a loop "
                              "in dependencies between schemes" );
