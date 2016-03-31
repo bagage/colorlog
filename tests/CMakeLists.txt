@@ -3,8 +3,8 @@ find_package(GTest QUIET)
 if (NOT GTEST_FOUND)
 	include(ExternalProject)
 	ExternalProject_Add(googletest
-		URL https://googletest.googlecode.com/files/gtest-1.7.0.zip
-		URL_HASH SHA1=f85f6d2481e2c6c4a18539e391aa4ea8ab0394af
+		URL https://github.com/google/googletest/archive/release-1.7.0.zip
+		URL_HASH SHA1=ef5e700c8a0f3ee123e2e0209b8b4961
 		INSTALL_COMMAND ""
 		)
 endif()
