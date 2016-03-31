@@ -1,5 +1,14 @@
 add_subdirectory(gmock-1.6.0)
-find_package(GTest REQUIRED)
+find_package(GTest QUIET)
+if (NOT GTEST_FOUND)
+	include(ExternalProject)
+	ExternalProject_Add(googletest
+		URL https://googletest.googlecode.com/files/gtest-1.7.0.zip
+		URL_HASH SHA1=f85f6d2481e2c6c4a18539e391aa4ea8ab0394af
+		INSTALL_COMMAND ""
+		)
+endif()
+
 include_directories(gmock-1.6.0/gtest/include)
 include_directories(gmock-1.6.0/include)
 include_directories(${BASE_SRC_DIR})
@@ -11,13 +20,13 @@ add_executable (CLHandlerTest CLHanlderUnitTest.cc )
 #debugging
 add_test(RulesTest ${EXECUTABLE_OUTPUT_PATH}/RulesTest)
 add_test(RulesTest|Valgrind valgrind --leak-check=full
-    --undef-value-errors=no -v --error-exitcode=1 --suppressions=${CMAKE_SOURCE_DIR}/tests/valgrind_supp/emutls.supp ${EXECUTABLE_OUTPUT_PATH}/RulesTest --gtest_filter=-*NonVal*) 
+	--undef-value-errors=no -v --error-exitcode=1 --suppressions=${CMAKE_SOURCE_DIR}/tests/valgrind_supp/emutls.supp ${EXECUTABLE_OUTPUT_PATH}/RulesTest --gtest_filter=-*NonVal*)
 add_test(ConfigTest ${EXECUTABLE_OUTPUT_PATH}/ConfigTest)
 add_test(ConfigTest|Valgrind valgrind --leak-check=full
-    --undef-value-errors=no -v --error-exitcode=1 --suppressions=${CMAKE_SOURCE_DIR}/tests/valgrind_supp/emutls.supp ${EXECUTABLE_OUTPUT_PATH}/RulesTest --gtest_filter=-*NonVal*) 
+	--undef-value-errors=no -v --error-exitcode=1 --suppressions=${CMAKE_SOURCE_DIR}/tests/valgrind_supp/emutls.supp ${EXECUTABLE_OUTPUT_PATH}/RulesTest --gtest_filter=-*NonVal*)
 add_test(CLHandlerTest ${EXECUTABLE_OUTPUT_PATH}/CLHandlerTest)
 add_test(CLHandlerTest|Valgrind valgrind --leak-check=full
-    --undef-value-errors=no -v --error-exitcode=1 --suppressions=${CMAKE_SOURCE_DIR}/tests/valgrind_supp/emutls.supp ${EXECUTABLE_OUTPUT_PATH}/CLHandlerTest ) 
+	--undef-value-errors=no -v --error-exitcode=1 --suppressions=${CMAKE_SOURCE_DIR}/tests/valgrind_supp/emutls.supp ${EXECUTABLE_OUTPUT_PATH}/CLHandlerTest )
 #cppcheck
 add_test(cppcheckInfo  cppcheck ${BASE_SRC_DIR} --error-exitcode=1 --enable=information -q )
 add_test(cppcheckUnusedFunctions  cppcheck ${BASE_SRC_DIR} --error-exitcode=1 --enable=unusedFunction -q )
