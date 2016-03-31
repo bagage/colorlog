@@ -21,7 +21,7 @@ int main( int aArgc, char* aArgv[] )
     }
     catch ( const std::exception& e )
     {
-        std::cerr << "Error occurred " << e.what() << std::endl;
+        std::cerr << "Error occurred: " << e.what() << std::endl;
         displayHelp();
     }
     catch ( ... )

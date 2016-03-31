@@ -65,7 +65,7 @@ const RuleBox::Ptr Config::getRuleBox( const std::string& aName ) const
     RuleMap::const_iterator lRulesIt( m_Rules.find( aName ) );
     if ( lRulesIt == m_Rules.end() )
     {
-        throw std::runtime_error( "Expected rule cannot be found in config file " + aName );
+        throw std::runtime_error( "Expected rule '" + aName + "' cannot be found in config file");
     }
     return lRulesIt->second;
 }
@@ -170,7 +170,7 @@ void Config::preprocessLine( const std::string& aLine, Words& aValues )
     std::string lValuePart( getDataPart( aLine ) );
     size_t lSplitter( lValuePart.find_first_of( ":" ) );
     aValues.push_back( lValuePart.substr( 0, lSplitter ) );
-    aValues.push_back( lValuePart.substr( 
+    aValues.push_back( lValuePart.substr(
                 lSplitter + 1, lValuePart.size() - lSplitter ) );
 }
 
