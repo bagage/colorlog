@@ -29,15 +29,15 @@ class Config
                 , const std::string&, bool ) > RuleCreator;
         typedef std::function< NumberRule::Ptr( ColorName
                 , const uint8_t ) > NumberRuleCreator;
-        typedef std::function< ReferenceRule::Ptr( 
+        typedef std::function< ReferenceRule::Ptr(
             const std::string&, Config&  ) >ReferenceRuleCreator;
         typedef std::function< RuleBox::Ptr( void ) > RuleBoxCreator;
         typedef std::vector< std::string > Words;
         typedef std::vector< ColorName > Colors;
 
     public: // functions
-        Config( std::istream& aFile );
-        Config( std::istream& aFile
+        explicit Config( std::istream& aFile );
+        explicit Config( std::istream& aFile
                 , RuleCreator aRuleCreator
                 , NumberRuleCreator aNumberRuleCreator
                 , ReferenceRuleCreator aRefCreator
@@ -63,7 +63,7 @@ class Config
                 , const bool aWholeL );
         void handleError( const std::string& aLine
                 , const size_t aLineNumber );
-        void handleRefRule( const std::string& aLine 
+        void handleRefRule( const std::string& aLine
                 , RuleBox::Ptr& aCurrentRuleBox );
 
         // condition simplifiers

@@ -86,11 +86,11 @@ void RuleBox::processLetter( const size_t aIndex
 {
     IntermediateResult::Markers lMarkers;
     aIResult.getMarkers( aIndex, lMarkers );
-    bool lReset( false );
     if ( !lMarkers.empty() )
     {
-        auto lMarkerProcessor( 
-                std::bind( 
+        bool lReset( false );
+        auto lMarkerProcessor(
+                std::bind(
                     &RuleBox::processMarkerForLetter
                     , this
                     , std::placeholders::_1
@@ -117,7 +117,7 @@ void RuleBox::removeFirstOccurence( const ColorName aColor
     }
 }
 
-void RuleBox::processMarkerForLetter( 
+void RuleBox::processMarkerForLetter(
                 const IntermediateResult::Marker& aMarker
                 , std::list< ColorName >& aColors
                 , bool& aReset

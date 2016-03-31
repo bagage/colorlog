@@ -33,6 +33,6 @@ add_test(CLHandlerTest|Valgrind valgrind --leak-check=full
 	--undef-value-errors=no -v --error-exitcode=1 --suppressions=${CMAKE_SOURCE_DIR}/tests/valgrind_supp/emutls.supp ${EXECUTABLE_OUTPUT_PATH}/CLHandlerTest )
 #cppcheck
 add_test(cppcheckInfo  cppcheck ${BASE_SRC_DIR} --error-exitcode=1 --enable=information -q )
-add_test(cppcheckUnusedFunctions  cppcheck ${BASE_SRC_DIR} --error-exitcode=1 --enable=unusedFunction -q )
+# add_test(cppcheckUnusedFunctions  cppcheck ${BASE_SRC_DIR} --error-exitcode=1 --enable=unusedFunction -q )
 add_test(cppcheckStyle  cppcheck ${BASE_SRC_DIR} --error-exitcode=1 --enable=style -q )
 add_test(cppcheckAll  cppcheck ${BASE_SRC_DIR} --error-exitcode=1 --enable=all -q )
