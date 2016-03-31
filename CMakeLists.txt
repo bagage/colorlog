@@ -17,15 +17,14 @@ include(GNUInstallDirs)
 FIND_PACKAGE( Boost 1.38 COMPONENTS regex REQUIRED )
 INCLUDE_DIRECTORIES( ${Boost_INCLUDE_DIR} )
 
+list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/CMake)
 
 # Set default build type
 message(STATUS "${PROJECT_NAME}: Build type - ${CMAKE_BUILD_TYPE}")
 
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pipe -fstack-protector-all -Wall -Wextra")
-set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -g3")
-set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_DEBUG} -O3")
+add_definitions(-pipe -fstack-protector-all -Wall -Wextra)
 
 set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR})
 
@@ -44,10 +43,10 @@ install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/data/color.1
     DESTINATION ${CMAKE_INSTALL_MANDIR}/man1
     COMPONENT manual)
 
-if (EXISTS ${CMAKE_INSTALL_FULL_DATAROOTDIR}/zsh/functions/Completion)
+if (EXISTS ${CMAKE_INSTALL_FULL_DATAROOTDIR}/zsh/functions/Completion/Zsh)
     message ("found zsh completion folder: gonna install color.zsh in it, great!")
 	install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/data/color.zsh
-	    DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/zsh/functions/Completion/
+	    DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/zsh/functions/Completion/Zsh
 	    COMPONENT completion
         RENAME _color)
 endif()
