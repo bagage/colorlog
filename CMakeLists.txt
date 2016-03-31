@@ -1,7 +1,9 @@
-cmake_minimum_required (VERSION 2.6)
+cmake_minimum_required (VERSION 3.0)
 
 # MACOSX_RPATH should be enabled
-cmake_policy(SET CMP0042 NEW)
+if (CMAKE_HOST_APPLE)
+    cmake_policy(SET CMP0042 NEW)
+endif()
 
 option(BUILD_TESTS "Build all of unit tests." ON)
 project (color)

@@ -1,5 +1,7 @@
 # color
 
+[![Build Status](https://travis-ci.org/bagage/color.svg?branch=master)](https://travis-ci.org/bagage/color)
+
 color is opensource program that allows to colorize console output
 eg. from compilation log, syslog or any other log displayed on unix console.
 It allows to define your own set of coloring rules, but comes with predefined

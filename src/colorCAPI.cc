@@ -9,11 +9,6 @@ Color::RuleBox::Ptr g_AppliedRules;
 
 void color_init( int argc, char** argv )
 {
-    char* lArgs[] = { const_cast< char* >( "color" )
-                   , const_cast< char* >( "syslog" ) }; // default
-    int lArgc = 2;
-    char** lArgv = lArgs;
-
     try
     {
         if ( argc ) // arguments were supported by user
@@ -24,6 +19,10 @@ void color_init( int argc, char** argv )
         }
         else // use default
         {
+            char* lArgs[] = { const_cast< char* >( "color" )
+                           , const_cast< char* >( "syslog" ) }; // default
+            int lArgc = 2;
+            char** lArgv = lArgs;
             g_Ret = INIT_NOT_CALLED_SETTINGS_DEFAULT;
             Color::CLHandler lHandler(lArgc, lArgv);
             g_AppliedRules = lHandler.produceRules();
@@ -38,9 +37,9 @@ void color_init( int argc, char** argv )
 
 ColorErrorCode color_colorize( char* aCString, char* aDest, size_t aDestSize )
 {
-    static size_t lLineNum( 0 );
     try
     {
+        static size_t lLineNum( 0 );
         std::string lLine( aCString );
         std::string lRes( g_AppliedRules->process( lLine
                                             , lLineNum++ ) );
