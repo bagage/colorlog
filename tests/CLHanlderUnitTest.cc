@@ -284,5 +284,5 @@ TEST_P( CLHandlerTestError, error_nonexistent_option )
 
 INSTANTIATE_TEST_CASE_P( error_case
                         , CLHandlerTestError
-                        , ::testing::Values( "-l", "--r", "-w", "--w", "-s", "--scheme", "-", "+" ) );
+                        , ::testing::Values( "-l", "--r", "-w", "--w", "-q", "--scheme", "-", "+" ) );
 }} // namespace Color::Test
