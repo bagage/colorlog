@@ -2,6 +2,7 @@
 #include "Config.hh"
 #include "RuleBox.hh"
 #include <fstream>
+#include <iostream>
 
 using std::shared_ptr;
 using std::function;
@@ -41,15 +42,9 @@ namespace Color {
             {
                 addRuleBoxes( lRules, m_Conf->getRuleBox( lArg ) );
             }
-            else if ( !m_Args.empty() )
+            else if ( handleCommand( lArg, m_Args.front(), lRules ) )
             {
-                handleCommand( lArg, m_Args.front(), lRules );
                 m_Args.pop_front();
-            }
-            else
-            {
-                throw std::runtime_error( "Command line "
-                        "argument lacks value '" + lArg + "'" );
             }
         }
         // if not found take first one
@@ -79,7 +74,7 @@ namespace Color {
         {
             aCurrent->addBox( std::ref( *aAdded ) );
         }
-        else 
+        else
         {
             aCurrent = aAdded;
         }
@@ -90,19 +85,47 @@ namespace Color {
         return ( aOpt.size() ) && ( aOpt.at( 0 ) == '-' );
     }
 
-    void CLHandler::handleCommand( const std::string& aCommand
+    bool CLHandler::handleCommand( const std::string& aCommand
                       , const std::string& aValue
                       , RuleBox::Ptr& aCurrent )
     {
-        if ( aCommand == "-r" || aCommand == "--regex" )
+        if ( aCommand == "-h" || aCommand == "--help" )
         {
-            RuleBox::Ptr lRegexBox( new RuleBox );
-            lRegexBox->addRule( 
-                Rule::Ptr( new Rule( DEFAULT_COLOR, aValue ) ) );
-            addRuleBoxes( aCurrent, lRegexBox );
-            return;
+            displayHelp();
+            exit(0);
         }
-        throw std::runtime_error( "Not supported argument '" 
+        else if ( aCommand == "-s" || aCommand == "--schemes" )
+        {
+            std::ifstream ifs;
+            if (findConfig(ifs))
+            {
+                Config config(ifs);
+                for (auto & kv : config.getAllRules())
+                {
+                    std::cout << kv.first << std::endl;
+                }
+            }
+            exit(0);
+        }
+        else if ( aCommand == "-r" || aCommand == "--regex" )
+        {
+            if ( !m_Args.empty() )
+            {
+                RuleBox::Ptr lRegexBox( new RuleBox );
+                lRegexBox->addRule(
+                    Rule::Ptr( new Rule( DEFAULT_COLOR, aValue ) ) );
+                addRuleBoxes( aCurrent, lRegexBox );
+                return true;
+            }
+            else
+            {
+                throw std::runtime_error( "Command line "
+                        "argument lacks value '" + aCommand + "'" );
+            }
+
+
+        }
+        throw std::runtime_error( "Not supported argument '"
                             "" + aCommand + "' (value '"
                             "" + aValue + "')" );
     }
