@@ -2,6 +2,8 @@
 
 #include <memory>
 #include <list>
+#include <functional>
+
 #include "utils.hh"
 namespace Color {
 
