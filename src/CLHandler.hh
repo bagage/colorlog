@@ -39,7 +39,7 @@ class CLHandler
         bool isCommandLineOption( const std::string& aOpt );
         void addRuleBoxes( std::shared_ptr< RuleBox >& aCurrent
                          , const std::shared_ptr< RuleBox >& aAdded );
-        void handleCommand( const std::string& aCommand
+        bool handleCommand( const std::string& aCommand
                           , const std::string& aValue
                           , std::shared_ptr< RuleBox> & aCurrent );
     protected: /// fields
