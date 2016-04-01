@@ -44,10 +44,10 @@ install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/data/color.1
     DESTINATION ${CMAKE_INSTALL_MANDIR}/man1
     COMPONENT manual)
 
-if (EXISTS ${CMAKE_INSTALL_FULL_DATAROOTDIR}/zsh/functions/Completion)
+if (EXISTS ${CMAKE_INSTALL_FULL_DATAROOTDIR}/zsh/functions/Completion/Zsh)
     message ("found zsh completion folder: gonna install color.zsh in it, great!")
 	install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/data/color.zsh
-	    DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/zsh/functions/Completion/
+	    DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/zsh/functions/Completion/Zsh
 	    COMPONENT completion
         RENAME _color)
 endif()

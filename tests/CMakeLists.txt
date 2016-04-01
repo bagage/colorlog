@@ -4,7 +4,7 @@ if (NOT GTEST_FOUND)
 	include(ExternalProject)
 	ExternalProject_Add(googletest
 		URL https://github.com/google/googletest/archive/release-1.7.0.zip
-		URL_HASH SHA1=ef5e700c8a0f3ee123e2e0209b8b4961
+		URL_HASH MD5=ef5e700c8a0f3ee123e2e0209b8b4961
 		INSTALL_COMMAND ""
 		)
 endif()
