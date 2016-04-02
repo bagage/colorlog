@@ -1,12 +1,14 @@
 language:
    - cpp
 
-# we cannot build on linux because travis is severly out of date and cannot
-# even provide cmake 3.0.0... so let's move to an up-to-date system
-brew:
-    packages:
-        - boost
-        - cmake
+addons:
+    apt:
+        sources:
+            - ubuntu-toolchain-r-test
+        packages:
+            - libgtest-dev
+            - libboost-regex-dev
+            - cmake
 
 script:
     - mkdir build
