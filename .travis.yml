@@ -1,14 +1,11 @@
 language:
    - cpp
 
-addons:
-    apt:
-        sources:
-            - ubuntu-toolchain-r-test
-        packages:
-            - libgtest-dev
-            - libboost-regex-dev
-            - cmake
+sudo: required
+dist: trusty
+
+install:
+    - sudo apt-get install -qq libgtest-dev libboost-regex-dev cmake
 
 script:
     - mkdir build
