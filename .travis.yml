@@ -1,11 +1,11 @@
 language:
    - cpp
 
-install:
-    - sudo apt-get install libgtest-dev unzip libboost-regex-dev cmake
-    - cmake -version
-    - wget https://github.com/google/googletest/archive/release-1.7.0.zip
-    - unzip *.zip
+apt:
+    packages:
+        - libgtest-dev
+        - libboost-regex-dev
+        - cmake
 
 script:
     - mkdir build
