@@ -2,7 +2,9 @@ language:
    - cpp
 
 install:
-   - sudo apt-get install libgtest-dev unzip libboost-regex-dev
+   - sudo apt-get install libgtest-dev
+   - sudo apt-get install unzip
+   - sudo apt-get install libboost-regex-dev
 
 script:
     - mkdir build
