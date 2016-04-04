@@ -1,20 +1,24 @@
-add_subdirectory(gmock-1.6.0)
-find_package(GTest QUIET)
-if (NOT GTEST_FOUND)
-	include(ExternalProject)
-	ExternalProject_Add(googletest
-		URL https://github.com/google/googletest/archive/release-1.7.0.zip
-		URL_HASH MD5=ef5e700c8a0f3ee123e2e0209b8b4961
-		INSTALL_COMMAND ""
-		)
-endif()
+include(UseGoogleMock)
 
-include_directories(gmock-1.6.0/gtest/include)
-include_directories(gmock-1.6.0/include)
-include_directories(${BASE_SRC_DIR})
+include_directories(${BASE_SRC_DIR} ${GMOCK_INCLUDE_DIRS})
+link_directories(${GMOCK_LIBRARY_DIRS})
+
 add_executable (RulesTest RulesUnitTest.cc IntermediateResultUnitTest.cc RuleBoxUnitTest.cc )
 add_executable (ConfigTest ConfigUnitTest.cc )
 add_executable (CLHandlerTest CLHanlderUnitTest.cc )
+
+target_compile_options(RulesTest PUBLIC -Wno-overloaded-virtual)
+target_compile_options(ConfigTest PUBLIC -Wno-overloaded-virtual)
+target_compile_options(CLHandlerTest PUBLIC -Wno-overloaded-virtual)
+
+add_dependencies(RulesTest GMockExternal ${CMAKE_PROJECT_NAME})
+add_dependencies(ConfigTest GMockExternal ${CMAKE_PROJECT_NAME})
+add_dependencies(CLHandlerTest GMockExternal ${CMAKE_PROJECT_NAME})
+
+target_link_libraries(RulesTest Rules Config ${GMOCK_LIBS} ${Boost_LIBRARIES} ${CMAKE_THREAD_LIBS_INIT})
+target_link_libraries(ConfigTest Config Rules ${GMOCK_LIBS} ${Boost_LIBRARIES} ${CMAKE_THREAD_LIBS_INIT})
+target_link_libraries(CLHandlerTest Config Rules CLHandler ${GMOCK_LIBS} ${Boost_LIBRARIES} ${CMAKE_THREAD_LIBS_INIT})
+
 #every test has its own valgrind version
 #so it is easy to turn off time-consuming valgrind tests in ctest while
 #debugging
@@ -32,7 +36,3 @@ add_test(cppcheckInfo  cppcheck ${BASE_SRC_DIR} --error-exitcode=1 --enable=info
 # add_test(cppcheckUnusedFunctions  cppcheck ${BASE_SRC_DIR} --error-exitcode=1 --enable=unusedFunction -q )
 add_test(cppcheckStyle  cppcheck ${BASE_SRC_DIR} --error-exitcode=1 --enable=style -q )
 add_test(cppcheckAll  cppcheck ${BASE_SRC_DIR} --error-exitcode=1 --enable=all -q )
-
-target_link_libraries(RulesTest Rules Config gtest gtest_main gmock ${Boost_LIBRARIES})
-target_link_libraries(ConfigTest Config Rules gtest gtest_main gmock ${Boost_LIBRARIES})
-target_link_libraries(CLHandlerTest Config Rules CLHandler gtest gtest_main gmock ${Boost_LIBRARIES})

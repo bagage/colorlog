@@ -21,7 +21,7 @@ class MockRule : public IRule
     public: // functions
         MOCK_CONST_METHOD3( apply
                 , void( const std::string&
-                      , IntermediateResult& 
+                      , IntermediateResult&
                       , uint64_t ) );
 }; // MockRule
 
@@ -88,7 +88,7 @@ class FakeRuleProducer
             return Config::Ptr( new Config( aStream ) );
         }
 
-        ReferenceRule::Ptr produceRefRule( 
+        ReferenceRule::Ptr produceRefRule(
                 const std::string& aStr
                 , Config& aConf )
         {
