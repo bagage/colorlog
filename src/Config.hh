@@ -12,9 +12,9 @@ class Config
     public: // constants
         static const char COMMENT_SIGN = '#';
         static const boost::regex RULE_BOX_REG;
-        static const boost::regex NUMBER_RULE_REG;
-        static const boost::regex RULE_REG;
-        static const boost::regex RULE_WHOLE_REG;
+        static const boost::regex NUMBER_RULE_REG[2];
+        static const boost::regex RULE_REG[2];
+        static const boost::regex RULE_WHOLE_REG[2];
         static const boost::regex REF_RULE_REG;
         static const uint8_t OMIT_FIRST_BRACKET = 1;
         static const uint8_t NUMBER_OF_BRACKETS_RULEBOX = 2;
@@ -74,15 +74,15 @@ class Config
         { return boost::regex_match( aLine, RULE_BOX_REG ); }
         bool couldBeNumberRule( const std::string& aLine
                 , const RuleBox::Ptr& aCurrentRuleBox )
-        { return ( boost::regex_match( aLine, NUMBER_RULE_REG )
+        { return ( boost::regex_match( aLine, NUMBER_RULE_REG[0] )
                 && aCurrentRuleBox ); }
         bool couldBeRule( const std::string& aLine
                 , const RuleBox::Ptr& aCurrentRuleBox )
-        { return ( boost::regex_match( aLine, RULE_REG )
+        { return ( boost::regex_match( aLine, RULE_REG[0] )
                 && aCurrentRuleBox ); }
         bool couldBeWholeLineRule( const std::string& aLine
                 , const RuleBox::Ptr& aCurrentRuleBox )
-        { return ( boost::regex_match( aLine, RULE_WHOLE_REG )
+        { return ( boost::regex_match( aLine, RULE_WHOLE_REG[0] )
                 && aCurrentRuleBox ); }
         bool couldBeRefRule( const std::string& aLine
                 , const RuleBox::Ptr& aCurrentRuleBox )

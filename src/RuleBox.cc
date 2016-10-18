@@ -51,7 +51,7 @@ std::string RuleBox::process( const std::string& aText
         lOutput << aText[ lIndex ];
     }
     if ( !lColors.empty() ) // loop might omit last sign
-        lOutput << COLOR_NAMES[ RESET ];
+        lOutput << supported_colors[RESET].ascii_code;
     return lOutput.str();
 }
 
@@ -146,12 +146,12 @@ void RuleBox::updateCurrentColor( std::ostream& aOutput
 {
     if ( aReset )
     {
-        aOutput << COLOR_NAMES[ RESET ];
+        aOutput << supported_colors[RESET].ascii_code;
         aReset = false;
     }
     else if ( aCurrentColor != aTopColor )
     {
-        aOutput << COLOR_NAMES[ aTopColor ];
+        aOutput << supported_colors[aTopColor].ascii_code;
     }
     aCurrentColor = aTopColor;
 }
