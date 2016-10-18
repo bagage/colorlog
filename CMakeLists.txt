@@ -6,7 +6,7 @@ if (CMAKE_HOST_APPLE)
 endif()
 
 option(BUILD_TESTS "Build all of unit tests." ON)
-project (color)
+project (color CXX)
 
 include(GNUInstallDirs)
 

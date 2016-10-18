@@ -37,6 +37,7 @@ class IRule
 
     public: // functions
         explicit IRule() {}
+        virtual ~IRule() {}
         virtual void apply( const std::string& aLine
                 , IntermediateResult& aResContainer
                 , uint64_t aLineNumber = 0 ) const = 0;

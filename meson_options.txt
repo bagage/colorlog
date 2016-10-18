@@ -1,0 +1,1 @@
+option('BUILD_TESTS', type : 'boolean', value : true, description : 'Build all of unit tests.')

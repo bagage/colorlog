@@ -14,6 +14,7 @@ class RuleBox
 
     public: // functions
         RuleBox();
+        virtual ~RuleBox() {}
         virtual void addRule( const IRule::Ptr& aRule );
         virtual std::string process( const std::string& aText
                 , const uint64_t aLineNumber = 0 ) const;
@@ -30,12 +31,12 @@ class RuleBox
                         , const uint64_t aLineNumber ) const;
         void processLetter( const size_t aIndex
                         , std::list< ColorName >& aColors
-                        , std::ostream& aOutput 
+                        , std::ostream& aOutput
                         , const IntermediateResult& aIResult
                         , ColorName& aCurrentColor ) const;
         void removeFirstOccurence( const ColorName aColor
                         , std::list< ColorName >& aColors ) const;
-        void processMarkerForLetter( 
+        void processMarkerForLetter(
                         const IntermediateResult::Marker& aMarker
                         , std::list< ColorName >& aColors
                         , bool& aReset

@@ -42,6 +42,7 @@ class Config
                 , NumberRuleCreator aNumberRuleCreator
                 , ReferenceRuleCreator aRefCreator
                 , RuleBoxCreator aRuleBoxCreator );
+        virtual ~Config() {}
 
         virtual const RuleBox::Ptr getRuleBox( const std::string& aName ) const;
         virtual const RuleMap& getAllRules() const;
