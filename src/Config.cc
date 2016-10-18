@@ -7,11 +7,23 @@
 
 namespace Color {
 
+std::string ColorList() {
+    std::ostringstream oss;
+    oss << "(";
+    for (ColorStruct cs : supported_colors) {
+        oss  << cs.name << "|";
+    }
+    oss.seekp(-1, std::ios_base::end); 
+    oss << ")";
+    return oss.str();
+}
+
 const boost::regex Config::RULE_BOX_REG = boost::regex( "\\[[a-zA-Z0-9]*\\][ ]*[#]?.*" );
-const std::string COLOR_NAME ="(\\[" + COLORS_LIST + "\\],)*\\[" + COLORS_LIST + "\\]";
-const boost::regex Config::NUMBER_RULE_REG = boost::regex( "alternate=[0-9]*:" + COLOR_NAME );
-const boost::regex Config::RULE_REG = boost::regex( "color=" + COLOR_NAME + ":.*" );
-const boost::regex Config::RULE_WHOLE_REG = boost::regex( "color_full_line=" + COLOR_NAME + ":.*" );
+const std::string GENERIC_COLOR_NAME ="(\\[.*\\],)*\\[.*\\]";
+const std::string COLOR_NAME ="(\\[" + ColorList() + "\\],)*\\[" + ColorList() + "\\]";
+const boost::regex Config::NUMBER_RULE_REG[2] = { boost::regex( "alternate=[0-9]*:" + GENERIC_COLOR_NAME ), boost::regex( "alternate=[0-9]*:" + COLOR_NAME ) };
+const boost::regex Config::RULE_REG[2] = { boost::regex( "color=" + GENERIC_COLOR_NAME + ":.*" ), boost::regex( "color=" + COLOR_NAME + ":.*" ) };
+const boost::regex Config::RULE_WHOLE_REG[2] = { boost::regex( "color_full_line=" + GENERIC_COLOR_NAME + ":.*" ), boost::regex( "color_full_line=" + COLOR_NAME + ":.*" ) };
 const boost::regex Config::REF_RULE_REG = boost::regex( "scheme=[a-zA-Z0-9]*" );
 // helper wrappers for constructors of rules
 Rule::Ptr ruleWrapper( ColorName aColor, const std::string& aRegex
@@ -121,41 +133,13 @@ void Config::parseConfig( std::istream& aStr )
 
 ColorName Config::matchColor( const std::string& aColorStr )
 {
-    if ( aColorStr == "[BLACK]" )
-        return BLACK;
-    if ( aColorStr == "[BOLD_BLACK]" )
-        return BOLD_BLACK;
-    if ( aColorStr == "[RED]" )
-        return RED;
-    if ( aColorStr == "[BOLD_RED]" )
-        return BOLD_RED;
-    if ( aColorStr == "[GREEN]" )
-        return GREEN;
-    if ( aColorStr == "[BOLD_GREEN]" )
-        return BOLD_GREEN;
-    if ( aColorStr == "[BROWN]" )
-        return BROWN;
-    if ( aColorStr == "[BOLD_BROWN]" )
-        return BOLD_BROWN;
-    if ( aColorStr == "[BLUE]" )
-        return BLUE;
-    if ( aColorStr == "[BOLD_BLUE]" )
-        return BOLD_BLUE;
-    if ( aColorStr == "[MAGENTA]" )
-        return MAGENTA;
-    if ( aColorStr == "[BOLD_MAGENTA]" )
-        return BOLD_MAGENTA;
-    if ( aColorStr == "[CYAN]" )
-        return CYAN;
-    if ( aColorStr == "[BOLD_CYAN]" )
-        return BOLD_CYAN;
-    if ( aColorStr == "[GRAY]" )
-        return GRAY;
-    if ( aColorStr == "[BOLD_GRAY]" )
-        return BOLD_GRAY;
-    if ( aColorStr == "[RESET]" )
-        return RESET;
-    return RESET;
+    //truncate brackets
+    std::string color = aColorStr.substr(1, aColorStr.size()-2); 
+
+    for (ColorStruct cs : supported_colors) {
+        if (cs.name == color) return cs.ename;
+    }
+    throw std::runtime_error( "Color '" + color + "' is not supported. Please choose in the list below:\n" + ColorList());
 }
 std::string Config::getDataPart( const std::string& aLine )
 {
