@@ -31,13 +31,21 @@ add_definitions(-pipe -fstack-protector-all -Wall -Wextra)
 set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR})
 
 include_directories("${PROJECT_BINARY_DIR}")
-set (BASE_SRC_DIR "${CMAKE_SOURCE_DIR}/src")
 
-file(COPY
-    ${CMAKE_CURRENT_SOURCE_DIR}/data/color.conf
-    DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/)
 
-install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/data/color.conf
+file(STRINGS ${CMAKE_CURRENT_SOURCE_DIR}/src/utils.hh SUPPORTED_COLORS2 REGEX "^.*[033]+" NEWLINE_CONSUME)
+set(SUPPORTED_COLORS)
+foreach (MA ${SUPPORTED_COLORS2})
+    string(REGEX MATCH "[A-Z_]+" SUPPORTED_COLOR "${MA}")
+    message("xd:${MA} --> ")
+    list(APPEND SUPPORTED_COLORS ${SUPPORTED_COLOR})
+endforeach()
+
+# message(FATAL_ERROR "xd:${MA} --> ${SUPPORTED_COLORS}")
+
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/data/color.conf ${CMAKE_CURRENT_BINARY_DIR} @ONLY)
+
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/data/color.conf
     DESTINATION ${CMAKE_INSTALL_SYSCONFDIR}
     COMPONENT configuration)
 
@@ -46,10 +54,10 @@ install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/data/color.1
     COMPONENT manual)
 
 if (EXISTS ${CMAKE_INSTALL_FULL_DATAROOTDIR}/zsh/functions/Completion/Zsh)
-    message ("found zsh completion folder: gonna install color.zsh in it, great!")
-	install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/data/color.zsh
-	    DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/zsh/functions/Completion/Zsh
-	    COMPONENT completion
+    message (STATUS "Found ZSH autocompletion folder: gonna install color.zsh in it, great!")
+    install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/data/color.zsh
+        DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/zsh/functions/Completion/Zsh
+        COMPONENT completion
         RENAME _color)
 endif()
 
