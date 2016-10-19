@@ -5,14 +5,15 @@ sudo: required
 dist: trusty
 
 install:
-    - sudo apt-get install -qq libgtest-dev libboost-regex-dev cmake cppcheck valgrind
+    - sudo apt-get install -qq libgtest-dev libboost-regex-dev python3-pip cppcheck valgrind
+    - sudo pip3 install meson
 
 script:
     - mkdir build
-    - cd build
-    - cmake .. -DCMAKE_BUILD_TYPE=Debug && make && ctest --output-on-failure
+    - meson build
+    - ninja -C build
 
 notifications:
     email:
         on_failure: never
-	on_success: never
+        on_success: never
