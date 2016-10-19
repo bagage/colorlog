@@ -1,7 +1,7 @@
 #pragma once
 #include <cstddef>
 
-enum ColorErrorCode
+enum ColorlogErrorCode
 {
     OK = 0,
     INIT_NOT_CALLED_SETTINGS_DEFAULT,
@@ -14,12 +14,12 @@ enum ColorErrorCode
 extern "C"
 #endif
 /**
- * @brief Initialize color with appropriate arguments
+ * @brief Initialize colorlog with appropriate arguments
  * Should be called simirarly to command line args passed
- * to binary of color. If is not called, default arguments 
+ * to binary of colorlog. If is not called, default arguments
  * will be assumed (mode syslog)
  **/
-void color_init( int argc, char** argv );
+void colorlog_init( int argc, char** argv );
 
 #ifdef __cplusplus
 extern "C"
@@ -33,8 +33,8 @@ extern "C"
  * @param aDest - returned coloured string (could be the same)
  * @param aDestSize - will not write more than aDestSize chars
  *
- * @return colorErrorCode
+ * @return colorlogErrorCode
  **/
-ColorErrorCode color_colorize( char* aCString, char* aDest, size_t aDestSize );
+ColorlogErrorCode colorlog_colorize( char* aCString, char* aDest, size_t aDestSize );
 
 

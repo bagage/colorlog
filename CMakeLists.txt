@@ -5,8 +5,8 @@ if (CMAKE_HOST_APPLE)
     cmake_policy(SET CMP0042 NEW)
 endif()
 
-option(BUILD_TESTS "Build all of unit tests." ON)
-project (color CXX)
+option(BUILD_TESTS "Build all of unit tests." OFF)
+project (colorlog CXX)
 
 include(GNUInstallDirs)
 
@@ -34,23 +34,23 @@ include_directories("${PROJECT_BINARY_DIR}")
 set (BASE_SRC_DIR "${CMAKE_SOURCE_DIR}/src")
 
 file(COPY
-    ${CMAKE_CURRENT_SOURCE_DIR}/data/color.conf
+    ${CMAKE_CURRENT_SOURCE_DIR}/data/colorlog.conf
     DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/)
 
-install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/data/color.conf
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/data/colorlog.conf
     DESTINATION ${CMAKE_INSTALL_SYSCONFDIR}
     COMPONENT configuration)
 
-install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/data/color.1
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/data/colorlog.1
     DESTINATION ${CMAKE_INSTALL_MANDIR}/man1
     COMPONENT manual)
 
 if (EXISTS ${CMAKE_INSTALL_FULL_DATAROOTDIR}/zsh/functions/Completion/Zsh)
-    message ("found zsh completion folder: gonna install color.zsh in it, great!")
-	install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/data/color.zsh
+    message ("found zsh completion folder: gonna install colorlog.zsh in it, great!")
+	install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/data/colorlog.zsh
 	    DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/zsh/functions/Completion/Zsh
 	    COMPONENT completion
-        RENAME _color)
+        RENAME _colorlog)
 endif()
 
 if (BUILD_TESTS)

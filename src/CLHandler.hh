@@ -5,7 +5,7 @@
 #include <functional>
 
 #include "utils.hh"
-namespace Color {
+namespace Colorlog {
 
 class RuleBox;
 class Rule;
@@ -54,4 +54,4 @@ class CLHandler
 
 }; // class CLHandler
 
-} // namespace Color
+}

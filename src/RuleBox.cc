@@ -1,7 +1,7 @@
 #include "RuleBox.hh"
 
 #include <stack>
-namespace Color {
+namespace Colorlog {
 
 RuleBox::RuleBox()
 {
@@ -155,4 +155,4 @@ void RuleBox::updateCurrentColor( std::ostream& aOutput
     }
     aCurrentColor = aTopColor;
 }
-} // namespace Color
+}

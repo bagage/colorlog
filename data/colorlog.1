@@ -1,4 +1,4 @@
-.\" color man page
+.\" colorlog man page
 .if !\n(.g \{\
 .	if !\w|\*(lq| \{\
 .		ds lq ``
@@ -12,33 +12,33 @@
 .de Id
 .ds Dt \\$4
 ..
-.Id $Id: color.1,v 0.8 2013/07/20 13:20:04 bero Exp $
-.TH COLOR 1 \*(Dt "Mateusz Lis"
+.Id $Id: colorlog.1,v 0.8 2013/07/20 13:20:04 bero Exp $
+.TH COLORLOG 1 \*(Dt "Mateusz Lis"
 .SH NAME
-color \- colorize console output of any program over unix pipe
+colorlog \- colorize console output of any program over unix pipe
 .SH SYNOPSIS
 .RI [ some-command ]
-.B | color
-.RI [ color-scheme ]
+.B | colorlog
+.RI [ colorlog-scheme ]
 .SH EXAMPLES
 $ cat /var/log/syslog |
-.B color 
+.B colorlog
 syslog
 .PP
 $ make &2>1 |
-.B color 
+.B colorlog
 gcc
 .PP
 $ valgrind --leak-check=full myProgram |
-.B color 
+.B colorlog
 valgrind
 .SH DESCRIPTION
 .PP
-.B Color 
-searches the standard input for the keywords to 
+.B Colorlog
+searches the standard input for the keywords to
 .B colorize.
-There are several predefined color-schemes (gcc, syslog, valgrind). Color-schemes can be altered/added in the conf
-file (usually /etc/color.conf).
+There are several predefined colorlog-schemes (gcc, syslog, valgrind). Colorlog-schemes can be altered/added in the conf
+file (usually /etc/colorlog.conf).
 .SH OPTIONS
 .TP
 No command line options
@@ -50,7 +50,7 @@ But the exit status is 2 if an error occurred
 .PP
 Email bug reports to
 .BR mateusz.lis@gmail.com .
-Be sure to include the word \*(lqcolor\*(rq somewhere in the
+Be sure to include the word \*(lqcolorlog\*(rq somewhere in the
 \*(lqSubject:\*(rq field.
 .PP
 .SH "SEE ALSO"

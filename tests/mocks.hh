@@ -4,7 +4,7 @@
 #include <istream>
 #include "Config.hh"
 
-namespace Color {
+namespace Colorlog {
 
 class MockIntermediateResult : public IntermediateResult
 {
@@ -165,6 +165,6 @@ class MockConfig : public Config
 
 }; // class MockConfig
 
-}  // namespace Color
+}
 
 

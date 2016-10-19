@@ -24,7 +24,7 @@
 #include "RuleBox.hh"
 #undef protected
 
-namespace Color { namespace Test {
+namespace Colorlog { namespace Test {
 
 TEST( RuleBox, Construct )
 {
@@ -119,5 +119,5 @@ TEST( RuleBox, CombiningBoxes )
 
 }
 
-}} // namespace Color::ColorTest
+}} ::ColorTest
 

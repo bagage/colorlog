@@ -20,7 +20,7 @@
 #include "RuleBox.hh"
 #include "mocks.hh"
 
-namespace Color { namespace Test {
+namespace Colorlog { namespace Test {
 
 using ::testing::_;
 using ::testing::InSequence;
@@ -84,7 +84,7 @@ TEST( RuleTest, colorize_whole_lines_with_numbers )
     EXPECT_CALL( lIResult, putMarker( 6, RED ) );
     lRule->apply( lFourthLine, lIResult );
 }
-
+log
 TEST( NumberRuleTest, one_color )
 {
     InSequence dummy;
@@ -299,5 +299,5 @@ TEST( ReferenceRuleTest, loop )
     EXPECT_THROW( lRefBox->process( lLine, 0 ), std::runtime_error );
 }
 
-}} // namespace Color::ColorTest
+}} ::ColorTest
 

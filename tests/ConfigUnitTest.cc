@@ -19,7 +19,7 @@
 #include "regex.hh"
 #include "testUtils.hh"
 
-namespace Color { namespace Test {
+namespace Colorlog { namespace Test {
 
 using ::testing::_;
 using ::testing::InSequence;
@@ -358,5 +358,5 @@ TEST_F( ConfigTest, MultipleBoxesMultipleRulesReference )
     ASSERT_EQ( lConfig->getAllRules().size(), TWO )
         << " Number of rules in file should be 1";
 }
-}} // namespace Color::ColorTest
+}} ::ColorTest
 

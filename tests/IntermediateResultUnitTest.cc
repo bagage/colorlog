@@ -15,7 +15,7 @@
 #include "mocks.hh"
 #include "testUtils.hh"
 
-namespace Color { namespace Test {
+namespace Colorlog { namespace Test {
 
 using ::testing::_;
 using ::testing::InSequence;
@@ -191,5 +191,5 @@ TEST( IntermediateResultTest, SingleRule_Extended_Position )
 }
 
 
-}} // namespace Color::ColorTest
+}} ::ColorTest
 

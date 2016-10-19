@@ -7,12 +7,12 @@
 #include <pwd.h>
 #include <stdlib.h>
 
-namespace Color {
+namespace Colorlog {
 
 const char* HOME_ENV_NAME = "HOME";
-const std::string COLOR_HOME_CONF_DIR = "/.color/"
-    , COLOR_CONF_FILENAME = "color.conf"
-    , COLOR_CONF_DIR = "/etc/";
+const std::string COLORLOG_HOME_CONF_DIR = "/.colorlog/"
+    , COLORLOG_CONF_FILENAME = "colorlog.conf"
+    , COLORLOG_CONF_DIR = "/etc/";
 
 void color( ColorName aCol, const std::string& aTxt, std::ostream& aStream, ColorName resetCol )
 {
@@ -21,11 +21,11 @@ void color( ColorName aCol, const std::string& aTxt, std::ostream& aStream, Colo
 
 void displayHelp()
 {
-    std::cerr << "Usage: [some-program] | color [color-scheme] " << std::endl
+    std::cerr << "Usage: [some-program] | colorlog [colorlog-scheme] " << std::endl
         << "Examples: " << std::endl
-        << "$ cat /var/log/syslog | color syslog" << std::endl
-        << "$ make 2>&1 | color gcc" << std::endl << std::endl
-        << "Enter man color for more information" << std::endl;
+        << "$ cat /var/log/syslog | colorlog syslog" << std::endl
+        << "$ make 2>&1 | colorlog gcc" << std::endl << std::endl
+        << "Enter man colorlog for more information" << std::endl;
 }
 
 std::string getHomePath()
@@ -43,13 +43,13 @@ std::string getHomePath()
 std::string getHomeConfigPath()
 {
     std::string lHomePath( getHomePath() );
-    return std::string( lHomePath + COLOR_HOME_CONF_DIR + COLOR_CONF_FILENAME );
+    return std::string( lHomePath + COLORLOG_HOME_CONF_DIR + COLORLOG_CONF_FILENAME );
 }
 
 bool findConfig( std::ifstream& aStr )
 {
     static const size_t PATHS_SIZE = 2;
-    static const std::string lPaths[ PATHS_SIZE ] = { getHomeConfigPath(), COLOR_CONF_DIR + COLOR_CONF_FILENAME };
+    static const std::string lPaths[ PATHS_SIZE ] = { getHomeConfigPath(), COLORLOG_CONF_DIR + COLORLOG_CONF_FILENAME };
     size_t lI( 0 );
     while ( lI < PATHS_SIZE && !aStr.is_open() )
     {
@@ -58,4 +58,4 @@ bool findConfig( std::ifstream& aStr )
     return aStr.is_open();
 }
 
-} // namespace Color
+}

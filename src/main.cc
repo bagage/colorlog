@@ -6,7 +6,7 @@
 
 #include <sys/wait.h>
 
-using namespace Color;
+using namespace Colorlog;
 int main( int argc, char** argv)
 {
     RuleBox::Ptr lAppliedRules;
@@ -14,13 +14,13 @@ int main( int argc, char** argv)
     try
     {
         // program can be invoked 2 different ways:
-        // 1) if color is invoked via color <executable>
+        // 1) if colorlog is invoked via colorlog <executable>
         if (isatty(fileno(stdin))) {
-            //TODO: yet no parameter is read from color so you cannot suggest scheme to use...
+            //TODO: yet no parameter is read from colorlog so you cannot suggest scheme to use...
             CLHandler handler( 1, argv );
             lAppliedRules = handler.produceRules();
 
-            PipedChild pc(argv[1], argc-1, &argv[1], NULL);
+            PipedChild pc(argv[1], argc-1, &argv[1]);
             int fd = pc.stdout;
             FILE* file = fdopen(fd, "r");
             if (file) {
@@ -35,7 +35,7 @@ int main( int argc, char** argv)
                     waitpid(pc.pid, &status, WNOHANG);
                 }
             }
-        // 2) if color is invoked via pipe: <executable> | color
+        // 2) if colorlog is invoked via pipe: <executable> | colorlog
         } else {
             CLHandler handler( argc, argv );
             lAppliedRules = handler.produceRules();

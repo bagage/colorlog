@@ -5,7 +5,7 @@
 
 #include "RuleBox.hh"
 
-namespace Color {
+namespace Colorlog {
 
 class Config
 {
@@ -106,4 +106,4 @@ class Config
 }; // class Config
 
 
-} // namespace Color
+}

@@ -1,5 +1,5 @@
 boost_dep = dependency('boost', modules : ['regex'], required: true)
-color_files = [
+colorlog_files = [
                 'utils.cc',
                 'Rules.cc',
                 'RuleBox.cc',
@@ -7,7 +7,7 @@ color_files = [
                 'CLHandler.cc',
                 'PipedChild.cc',
               ]
-color_lib = static_library('color', color_files, dependencies: boost_dep)
+colorlog_lib = static_library('colorlog', colorlog_files, dependencies: boost_dep)
 
-static_library('ColorCAPI', 'colorCAPI.cc', link_with: color_lib)
-executable('color', 'main.cc', link_with: color_lib)
+static_library('ColorlogCAPI', 'colorlogCAPI.cc', link_with: colorlog_lib)
+executable('colorlog', 'main.cc', link_with: colorlog_lib)

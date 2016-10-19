@@ -5,7 +5,7 @@
 #include <boost/lexical_cast.hpp>
 
 
-namespace Color {
+namespace Colorlog {
 
 std::string ColorList() {
     std::ostringstream oss;
@@ -13,7 +13,7 @@ std::string ColorList() {
     for (ColorStruct cs : supported_colors) {
         oss  << cs.name << "|";
     }
-    oss.seekp(-1, std::ios_base::end); 
+    oss.seekp(-1, std::ios_base::end);
     oss << ")";
     return oss.str();
 }
@@ -134,7 +134,7 @@ void Config::parseConfig( std::istream& aStr )
 ColorName Config::matchColor( const std::string& aColorStr )
 {
     //truncate brackets
-    std::string color = aColorStr.substr(1, aColorStr.size()-2); 
+    std::string color = aColorStr.substr(1, aColorStr.size()-2);
 
     for (ColorStruct cs : supported_colors) {
         if (cs.name == color) return cs.ename;
@@ -231,4 +231,4 @@ void Config::handleError( const std::string& aLine
     throw std::runtime_error( lStr.str() );
 }
 
-} // namespace Color
+}

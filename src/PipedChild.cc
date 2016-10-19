@@ -9,7 +9,7 @@
 #define PIPE_READ 0
 #define PIPE_WRITE 1
 
-PipedChild::PipedChild(const char* szCommand, int aArgc, char** const aArguments, char** const aEnvironment) : stdout(-1) {
+PipedChild::PipedChild(const char* szCommand, int aArgc, char** const aArguments) : stdout(-1) {
     if (!szCommand) return;
 
     // exec process, but redirect STDERR to STDOUT to avoid dealing with 2 different pipes needlessly
@@ -22,7 +22,7 @@ PipedChild::PipedChild(const char* szCommand, int aArgc, char** const aArguments
     args[i] = strdup("2>&1");
     args[i] = NULL;
 
-    //TODO: szCommand should not be color itself - compare its value with /proc/self/exe
+    //TODO: szCommand should not be colorlog itself - compare its value with /proc/self/exe
     // if szCommand is not a fullpath, find the executable in PATH
     char* cmd = realpath(szCommand, NULL);
     if (!cmd || access( szCommand, F_OK ) == -1) {

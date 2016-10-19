@@ -1,8 +1,15 @@
-add_library(Rules utils.cc Rules.cc RuleBox.cc)
-add_library(Config Config.cc)
-add_library(CLHandler CLHandler.cc)
-add_library(ColorCAPI utils.cc colorCAPI.cc)
-add_executable(color utils.cc main.cc)
-install(TARGETS color DESTINATION bin)
-target_link_libraries(color CLHandler Config Rules  ${Boost_LIBRARIES})
-target_link_libraries(ColorCAPI CLHandler Config Rules  ${Boost_LIBRARIES})
+add_library(colorloglib
+    CLHandler.cc
+    Config.cc
+    PipedChild.cc
+    RuleBox.cc
+    Rules.cc
+    utils.cc
+)
+add_library(ColorlogCAPI colorlogCAPI.cc)
+add_executable(colorlog main.cc)
+
+target_link_libraries(colorlog colorloglib  ${Boost_LIBRARIES})
+target_link_libraries(ColorlogCAPI colorloglib  ${Boost_LIBRARIES})
+
+install(TARGETS colorlog DESTINATION bin)

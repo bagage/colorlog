@@ -1,30 +1,30 @@
-#include "colorCAPI.h"
+#include "colorlogCAPI.h"
 
 #include "CLHandler.hh"
 #include "RuleBox.hh"
 #include <stdio.h>
 
-ColorErrorCode g_Ret;
-Color::RuleBox::Ptr g_AppliedRules;
+ColorlogErrorCode g_Ret;
+Colorlog::RuleBox::Ptr g_AppliedRules;
 
-void color_init( int argc, char** argv )
+void colorlog_init( int argc, char** argv )
 {
     try
     {
         if ( argc ) // arguments were supported by user
         {
             g_Ret = OK;
-            Color::CLHandler lHandler(argc, argv);
+            Colorlog::CLHandler lHandler(argc, argv);
             g_AppliedRules = lHandler.produceRules();
         }
         else // use default
         {
-            char* lArgs[] = { const_cast< char* >( "color" )
+            char* lArgs[] = { const_cast< char* >( "colorlog" )
                            , const_cast< char* >( "syslog" ) }; // default
             int lArgc = 2;
             char** lArgv = lArgs;
             g_Ret = INIT_NOT_CALLED_SETTINGS_DEFAULT;
-            Color::CLHandler lHandler(lArgc, lArgv);
+            Colorlog::CLHandler lHandler(lArgc, lArgv);
             g_AppliedRules = lHandler.produceRules();
         }
     }
@@ -35,7 +35,7 @@ void color_init( int argc, char** argv )
     }
 }
 
-ColorErrorCode color_colorize( char* aCString, char* aDest, size_t aDestSize )
+ColorlogErrorCode colorlog_colorize( char* aCString, char* aDest, size_t aDestSize )
 {
     try
     {

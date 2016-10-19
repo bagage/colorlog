@@ -2,7 +2,7 @@
 #include "RuleBox.hh"
 #include "Config.hh"
 
-namespace Color {
+namespace Colorlog {
 
 IntermediateResult::IntermediateResult( const size_t aSize )
     : m_RulesOnPositions( aSize )
@@ -172,4 +172,4 @@ void ReferenceRule::checkLoops( const std::string& aLine ) const
                              "in dependencies between schemes" );
 }
 
-} // namespace Color
+}

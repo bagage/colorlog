@@ -5,7 +5,7 @@ class PipedChild {
         int stdout;
         int pid;
 
-        PipedChild(const char* szCommand, int aArgc, char** const aArguments, char** const aEnvironment);
+        PipedChild(const char* szCommand, int aArgc, char** const aArguments);
         ~PipedChild();
 
     private:

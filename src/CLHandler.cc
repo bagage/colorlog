@@ -9,7 +9,7 @@ using std::function;
 using std::string;
 using std::istream;
 
-namespace Color {
+namespace Colorlog {
 
     static Config::Ptr confCreator( std::istream& aConfFile )
     {
@@ -62,7 +62,7 @@ namespace Color {
 
     void CLHandler::initConfiguration()
     {
-        std::ifstream lStr( "color.conf" );
+        std::ifstream lStr( "colorlog.conf" );
         m_ConfFinder( lStr );
         m_Conf = m_ConfCreator( lStr );
     }
@@ -130,4 +130,4 @@ namespace Color {
                             "" + aValue + "')" );
     }
 
-} // namespace Color
+}

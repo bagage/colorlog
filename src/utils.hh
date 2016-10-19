@@ -2,7 +2,7 @@
 
 #include <string>
 
-namespace Color {
+namespace Colorlog {
 
 enum ColorName {
     RESET = 0,
@@ -55,4 +55,4 @@ void displayHelp();
 bool findConfig( std::ifstream& aStr );
 
 
-} // namespace Color
+}

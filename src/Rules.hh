@@ -6,7 +6,7 @@
 
 #include "utils.hh"
 
-namespace Color {
+namespace Colorlog {
 
 class IntermediateResult
 {
@@ -134,4 +134,4 @@ class ReferenceRule : public IRule
         mutable std::string  m_InvestigatedStringCopy;
 }; // class ReferenceRule
 
-} // namespace Color
+}

@@ -5,7 +5,7 @@
 #include "utils.hh"
 #include "Rules.hh"
 
-namespace Color {
+namespace Colorlog {
 
 class RuleBox
 {
@@ -50,4 +50,4 @@ class RuleBox
         std::list< IRule::Ptr > m_Rules;
 }; // class RuleBox
 
-} // namespace Color
+}

@@ -12,7 +12,7 @@
 #include "gtest/gtest.h"
 #include "mocks.hh"
 
-namespace Color { namespace Test {
+namespace Colorlog { namespace Test {
 
 using ::testing::_;
 using ::testing::InSequence;
@@ -60,14 +60,14 @@ TEST_F( CLHandlerTest, Construct_empty )
 
 TEST_F( CLHandlerTest, Construct_not_entirely_empty )
 {
-    char* lArgv[] = { const_cast< char* >( "color" ) };
+    char* lArgv[] = { const_cast< char* >( "colorlog" ) };
     CLHandler::Ptr lHandler;
     ASSERT_NO_THROW( lHandler.reset( new CLHandler( 1, lArgv ) ) );
 }
 
 TEST_F( CLHandlerTest, Construct_scheme_name_not_exists )
 {
-    char* lArgv[] = { const_cast< char* >( "color" )
+    char* lArgv[] = { const_cast< char* >( "colorlog" )
                     , const_cast< char* >( "non_existent" ) };
     CLHandler::Ptr lHandler;
     ASSERT_NO_THROW( lHandler.reset( new CLHandler( 2, lArgv ) ) );
@@ -86,7 +86,7 @@ TEST_F( CLHandlerTest, Construct_scheme_name_not_exists )
 
 TEST_F( CLHandlerTest, Construct_scheme_name_exists )
 {
-    char* lArgv[] = { const_cast< char* >( "color" )
+    char* lArgv[] = { const_cast< char* >( "colorlog" )
                     , const_cast< char* >( "gcc" ) };
     CLHandler::Ptr lHandler;
     ASSERT_NO_THROW( lHandler.reset( new CLHandler( 2, lArgv ) ) );
@@ -110,7 +110,7 @@ TEST_F( CLHandlerTest, Construct_scheme_name_exists )
 TEST_P( CLHandlerTestWParam, regexp_arg )
 {
     static const char* REGEX( ".*" );
-    char* lArgv[] = { const_cast< char* >( "color" )
+    char* lArgv[] = { const_cast< char* >( "colorlog" )
                     , const_cast< char* >( GetParam() )
                     , const_cast< char* >( REGEX )
     };
@@ -130,7 +130,7 @@ using ::testing::_;
 
 TEST_F( CLHandlerTest, two_schemes )
 {
-    char* lArgv[] = { const_cast< char* >( "color" )
+    char* lArgv[] = { const_cast< char* >( "colorlog" )
                     , const_cast< char* >( "gcc" )
                     , const_cast< char* >( "valgrind" ) };
     CLHandler::Ptr lHandler;
@@ -162,7 +162,7 @@ TEST_F( CLHandlerTest, two_schemes )
 
 TEST_F( CLHandlerTest, five_schemes )
 {
-    char* lArgv[] = { const_cast< char* >( "color" )
+    char* lArgv[] = { const_cast< char* >( "colorlog" )
                     , const_cast< char* >( "gcc" )
                     , const_cast< char* >( "cmake" )
                     , const_cast< char* >( "gtest" )
@@ -202,7 +202,7 @@ TEST_F( CLHandlerTest, five_schemes )
 TEST_P( CLHandlerTestWParam, scheme_and_regex )
 {
     static const char* REGEX( ".*" );
-    char* lArgv[] = { const_cast< char* >( "color" )
+    char* lArgv[] = { const_cast< char* >( "colorlog" )
                     , const_cast< char* >( "gcc" )
                     , const_cast< char* >( GetParam() )
                     , const_cast< char* >( REGEX ) };
@@ -233,7 +233,7 @@ TEST_P( CLHandlerTestWParam, scheme_and_regex )
 TEST_P( CLHandlerTestWParam, regex_and_scheme )
 {
     static const char* REGEX( ".*" );
-    char* lArgv[] = { const_cast< char* >( "color" )
+    char* lArgv[] = { const_cast< char* >( "colorlog" )
                     , const_cast< char* >( GetParam() )
                     , const_cast< char* >( REGEX )
                     , const_cast< char* >( "gcc" ) };
@@ -272,7 +272,7 @@ INSTANTIATE_TEST_CASE_P( scheme_and_short_regex
 TEST_P( CLHandlerTestError, error_nonexistent_option )
 {
     static const char* REGEX( ".*" );
-    char* lArgv[] = { const_cast< char* >( "color" )
+    char* lArgv[] = { const_cast< char* >( "colorlog" )
                     , const_cast< char* >( GetParam() )
                     , const_cast< char* >( REGEX )
                     , const_cast< char* >( "gcc" ) };
@@ -285,4 +285,4 @@ TEST_P( CLHandlerTestError, error_nonexistent_option )
 INSTANTIATE_TEST_CASE_P( error_case
                         , CLHandlerTestError
                         , ::testing::Values( "-l", "--r", "-w", "--w", "-q", "--scheme", "-", "+" ) );
-}} // namespace Color::Test
+}}
