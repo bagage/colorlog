@@ -9,10 +9,10 @@
 using namespace Colorlog;
 int main( int argc, char** argv)
 {
-    RuleBox::Ptr lAppliedRules;
-    size_t lI( 0 );
     try
     {
+        RuleBox::Ptr lAppliedRules;
+        size_t lI( 0 );
         // program can be invoked 2 different ways:
         // 1) if colorlog is invoked via colorlog <scheme> <executable>
         if (isatty(fileno(stdin))) {

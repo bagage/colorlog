@@ -1,4 +1,4 @@
-project('colorlog', 'cpp', default_options : ['cpp_std=c++11'])
+project('colorlog', 'cpp', default_options : ['cpp_std=c++11'], meson_version: '>=0.36.0.dev1')
 if meson.get_compiler('cpp').get_id() != 'msvc'
     add_global_arguments('-std=c++11', language: 'cpp')
 endif
@@ -15,4 +15,4 @@ endif
 
 install_man('data/colorlog.1')
 install_data('data/colorlog.conf', install_dir: '/etc')
-install_data('data/_colorlog', install_dir: get_option('datadir') + '/zsh/functions/Completion/Zsh')
+install_data('data/_colorlog', install_dir: '/usr/share/zsh/functions/Completion/Zsh')

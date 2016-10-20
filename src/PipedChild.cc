@@ -14,16 +14,6 @@
 PipedChild::PipedChild(const char* szCommand, int aArgc, char** const aArguments) : stdout(-1) {
     if (!szCommand) return;
 
-    // exec process, but redirect STDERR to STDOUT to avoid dealing with 2 different pipes needlessly
-    int malloc_size = aArgc + 2;
-    char** args = (char **) malloc((malloc_size) * sizeof (char *));
-    int i = 0;
-    for (; i < aArgc; i++) {
-        args[i] = strdup(aArguments[i]);
-    }
-    args[i] = strdup("2>&1");
-    args[i] = NULL;
-
     //TODO: szCommand should not be colorlog itself - compare its value with /proc/self/exe
     // if szCommand is not a fullpath, find the executable in PATH
     char* cmd = realpath(szCommand, NULL);
@@ -71,7 +61,22 @@ PipedChild::PipedChild(const char* szCommand, int aArgc, char** const aArguments
         close(the_pipe[PIPE_READ]);
         // close(the_pipe[PIPE_WRITE]);
 
+        // exec process, but redirect STDERR to STDOUT to avoid dealing with 2 different pipes needlessly
+        int malloc_size = aArgc + 2;
+        char** args = (char **) malloc((malloc_size) * sizeof (char *));
+        int i;
+        for (i = 0; i < aArgc; i++) {
+            args[i] = strdup(aArguments[i]);
+        }
+        args[i] = strdup("2>&1");
+        args[i] = NULL;
+
         exec_process(cmd, args);
+
+        for (i = 0; i < aArgc; i++) {
+            free(args[i]);
+        }
+        free(args);
 
         // reaching that mean the children stopped/crashed
         report_exec_error(errno, cmd, args);

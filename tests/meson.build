@@ -25,8 +25,3 @@ valgrind_args = ['--undef-value-errors=no', '-v', '--suppressions=' + valgrind_s
 test('RulesTest', rulestest_exe, valgrind_args: valgrind_args)
 test('ConfigTest', configtest_exe, valgrind_args: valgrind_args)
 test('CLHandlerTest', clhandlertest_exe, valgrind_args: valgrind_args)
-#cppcheck
-# test('cppcheckInfo', 'cppcheck', args : [ '../src', '--error-exitcode=1', '--enable=information', '-q'])
-# test('cppcheckInfo', 'cppcheck', args : [ '../src', '--error-exitcode=1', '--enable=unusedFunction', '-q'])
-# test('cppcheckStyle', 'cppcheck', args : [ '../src', '--error-exitcode=1', '--enable=style', '-q'])
-# test('cppcheckAll', 'cppcheck', args : [ '../src', '--error-exitcode=1', '--enable=all', '-q'])
