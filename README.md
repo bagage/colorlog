@@ -1,6 +1,6 @@
 # colorlog
 
-[![Build Status](https://travis-ci.org/bagage/colorlog.svg?branch=master)](https://travis-ci.org/bagage/colorlog)
+[![Build Status](https://gitlab.com/bagage/colorlog/badges/master/build.svg)](https://gitlab.com/bagage/colorlog/commits/master)
 
 This colorize logs/output by finding regular patterns.
 
