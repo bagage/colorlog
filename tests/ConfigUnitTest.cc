@@ -81,7 +81,7 @@ class ConfigTest : public ::testing::Test
         EXPECT_CALL( *m_RuleProducer, produceRuleBoxMock() ).Times( 2 );
         EXPECT_CALL( *m_RuleProducer, produceRuleMock( RED, REGEX, true ) )
             .Times( 1 );
-        EXPECT_CALL( *m_RuleProducer, produceRuleMock( BROWN, REGEX, false ) )
+        EXPECT_CALL( *m_RuleProducer, produceRuleMock( YELLOW, REGEX, false ) )
             .Times( 1 );
         EXPECT_CALL( *lFirstRuleBox, addRule( _ ) ).Times( 2 );
         EXPECT_CALL( *m_RuleProducer, produceNumberRuleMock( BLUE, 3 ) )
@@ -111,7 +111,7 @@ TEST_F( ConfigTest, Construct_NonValgrind )
     Config::Ptr lConfig;
     EXPECT_THROW( lConfig = Config::Ptr( new Config( lStr ) ), std::runtime_error );
 }
-#define SingleColorTest(col) \
+#define SingleColorlogTest(col) \
 TEST_F( ConfigTest, SingleBoxWithSingleRegexRule##col ) \
 { \
     InSequence lSeq; \
@@ -125,30 +125,30 @@ TEST_F( ConfigTest, SingleBoxWithSingleRegexRule##col ) \
 }
 
 // let's check if all colors are supported
-SingleColorTest(BLACK);
-SingleColorTest(BOLD_BLACK);
-SingleColorTest(RED);
-SingleColorTest(BOLD_RED);
-SingleColorTest(BROWN);
-SingleColorTest(BOLD_BROWN);
-SingleColorTest(CYAN);
-SingleColorTest(BOLD_CYAN);
-SingleColorTest(GRAY);
-SingleColorTest(BOLD_GRAY);
-SingleColorTest(BLUE);
-SingleColorTest(BOLD_BLUE);
-SingleColorTest(GREEN);
-SingleColorTest(BOLD_GREEN);
-SingleColorTest(MAGENTA);
-SingleColorTest(BOLD_MAGENTA);
-SingleColorTest(RESET);
+SingleColorlogTest(BLACK);
+SingleColorlogTest(BOLD_BLACK);
+SingleColorlogTest(RED);
+SingleColorlogTest(BOLD_RED);
+SingleColorlogTest(YELLOW);
+SingleColorlogTest(BOLD_YELLOW);
+SingleColorlogTest(CYAN);
+SingleColorlogTest(BOLD_CYAN);
+SingleColorlogTest(GRAY);
+SingleColorlogTest(BOLD_GRAY);
+SingleColorlogTest(BLUE);
+SingleColorlogTest(BOLD_BLUE);
+SingleColorlogTest(GREEN);
+SingleColorlogTest(BOLD_GREEN);
+SingleColorlogTest(MAGENTA);
+SingleColorlogTest(BOLD_MAGENTA);
+SingleColorlogTest(RESET);
 
 TEST_F( ConfigTest, SingleBoxWithSingleNumberRule )
 {
     InSequence lSeq;
     const std::string RULE_NAME( "BoxName" );
     std::istringstream lStr( "[" + RULE_NAME + "]\n"
-            "alternate=3:[BLUE],[BROWN]\n" );
+            "alternate=3:[BLUE],[YELLOW]\n" );
 
     MockNumberRule::Ptr lMockRule( new MockNumberRule );
     m_RuleProducer->addNumberRule( lMockRule );
@@ -159,7 +159,7 @@ TEST_F( ConfigTest, SingleBoxWithSingleNumberRule )
     EXPECT_CALL( *m_RuleProducer, produceNumberRuleMock( BLUE, THREE ) )
         .Times( 1 );
         //.WillOnce( Return( lMockRule ) );
-    EXPECT_CALL( *lMockRule, addColor( BROWN ) ).Times( 1 );
+    EXPECT_CALL( *lMockRule, addColor( YELLOW ) ).Times( 1 );
 
     Config::Ptr lConfig( createConfig( lStr ) );
     ASSERT_EQ( lConfig->getAllRules().size(), ONE )
@@ -199,12 +199,12 @@ TEST_F( ConfigTest, MultipleBoxesMultipleRules )
     const std::string RULE_NAME( "BoxName" ), SECOND_RULE( "Name" );
     std::istringstream lStr(  "[" + RULE_NAME + "]\n"
         "color_full_line=[RED]:" + REGEX + "\n"
-        "color=[BROWN]:" + REGEX + "\n"
+        "color=[YELLOW]:" + REGEX + "\n"
         "\n"
         "\n"
         "[" + SECOND_RULE + "]\n"
         "\n"
-        "alternate=3:[BLUE],[BROWN]\n" );
+        "alternate=3:[BLUE],[YELLOW]\n" );
 
     setExpectations();
 
@@ -222,13 +222,13 @@ TEST_F( ConfigTest, ConfigWithComments )
         "[" + RULE_NAME + "]\n"
         "#comment\n"
         "color_full_line=[RED]:" + REGEX + "\n"
-        "#color=[BROWN]:ala\n"
-        "color=[BROWN]:" + REGEX + "\n"
+        "#color=[YELLOW]:ala\n"
+        "color=[YELLOW]:" + REGEX + "\n"
         "#aas\n"
         "\n"
         "[" + SECOND_RULE + "]\n"
         "\n"
-        "alternate=3:[BLUE],[BROWN]\n" );
+        "alternate=3:[BLUE],[YELLOW]\n" );
 
     setExpectations();
 
@@ -245,13 +245,13 @@ TEST_F( ConfigTest, WrongBoxName_NonValgrind )
         "[" + RULE_NAME + "]\n"
         "#comment\n"
         "color_full_line=[RED]:" + REGEX + "\n"
-        "#color=[BROWN]:ala\n"
-        "color=[BROWN]:" + REGEX + "\n"
+        "#color=[YELLOW]:ala\n"
+        "color=[YELLOW]:" + REGEX + "\n"
         "#aas\n"
         "\n"
         "[" + SECOND_RULE + "]\n"
         "\n"
-        "alternate=3:[BLUE],[BROWN]\n" );
+        "alternate=3:[BLUE],[YELLOW]\n" );
 
     Config::Ptr lConfig;
     ASSERT_THROW( lConfig = Config::Ptr( new Config( lStr ) ), std::runtime_error );
@@ -265,13 +265,13 @@ TEST_F( ConfigTest, WrongBoxName2_NonValgrind )
         "[" + RULE_NAME + "]\n"
         "#comment\n"
         "color_full_line=[RED]:" + REGEX + "\n"
-        "#color=[BROWN]:ala\n"
-        "color=[BROWN]:" + REGEX + "\n"
+        "#color=[YELLOW]:ala\n"
+        "color=[YELLOW]:" + REGEX + "\n"
         "#aas\n"
         "\n"
         "[" + SECOND_RULE + "]\n"
         "\n"
-        "alternate=3:[BLUE],[BROWN]\n" );
+        "alternate=3:[BLUE],[YELLOW]\n" );
 
     Config::Ptr lConfig;
     ASSERT_THROW( lConfig = Config::Ptr( new Config( lStr ) ), std::runtime_error );
@@ -285,13 +285,13 @@ TEST_F( ConfigTest, SpacesInContent_NonValgrind )
         "[" + RULE_NAME + "]\n"
         "#comment\n"
         "color_full_line=[RED] :" + REGEX + "\n" // space error
-        "#color=[BROWN]:ala\n"
-        "color=[BROWN]:" + REGEX + "\n"
+        "#color=[YELLOW]:ala\n"
+        "color=[YELLOW]:" + REGEX + "\n"
         "#aas\n"
         "\n"
         "[" + SECOND_RULE + "]\n"
         "\n"
-        "alternate=3:[BLUE],[BROWN]\n" );
+        "alternate=3:[BLUE],[YELLOW]\n" );
 
     Config::Ptr lConfig;
     ASSERT_THROW( lConfig = Config::Ptr( new Config( lStr ) ), std::runtime_error );
@@ -305,13 +305,13 @@ TEST_F( ConfigTest, SpacesInContent2_NonValgrind )
         "[" + RULE_NAME + "]\n"
         "#comment\n"
         "color_full_line= [RED]:" + REGEX + "\n" // space error
-        "#color=[BROWN]:ala\n"
-        "color=[BROWN]:" + REGEX + "\n"
+        "#color=[YELLOW]:ala\n"
+        "color=[YELLOW]:" + REGEX + "\n"
         "#aas\n"
         "\n"
         "[" + SECOND_RULE + "]\n"
         "\n"
-        "alternate=3:[BLUE],[BROWN]\n" );
+        "alternate=3:[BLUE],[YELLOW]\n" );
 
     Config::Ptr lConfig;
     ASSERT_THROW( lConfig = Config::Ptr( new Config( lStr ) ), std::runtime_error );
@@ -325,13 +325,13 @@ TEST_F( ConfigTest, WrongPrefixName_NonValgrind )
         "[" + RULE_NAME + "]\n"
         "#comment\n"
         "color_full_lise= [RED]:" + REGEX + "\n" // error
-        "#color=[BROWN]:ala\n"
-        "color=[BROWN]:" + REGEX + "\n"
+        "#color=[YELLOW]:ala\n"
+        "color=[YELLOW]:" + REGEX + "\n"
         "#aas\n"
         "\n"
         "[" + SECOND_RULE + "]\n"
         "\n"
-        "alternate=3:[BLUE],[BROWN]\n" );
+        "alternate=3:[BLUE],[YELLOW]\n" );
 
     Config::Ptr lConfig;
     ASSERT_THROW( lConfig = Config::Ptr( new Config( lStr ) ), std::runtime_error );
@@ -342,12 +342,12 @@ TEST_F( ConfigTest, MultipleBoxesMultipleRulesReference )
     const std::string RULE_NAME( "BoxName" ), SECOND_RULE( "Name" );
     std::istringstream lStr(  "[" + RULE_NAME + "]\n"
         "color_full_line=[RED]:" + REGEX + "\n"
-        "color=[BROWN]:" + REGEX + "\n"
+        "color=[YELLOW]:" + REGEX + "\n"
         "\n"
         "\n"
         "[" + SECOND_RULE + "]\n"
         "\n"
-        "alternate=3:[BLUE],[BROWN]\n"
+        "alternate=3:[BLUE],[YELLOW]\n"
         "scheme=" + RULE_NAME + "\n" );
 
     setExpectations();
@@ -358,5 +358,5 @@ TEST_F( ConfigTest, MultipleBoxesMultipleRulesReference )
     ASSERT_EQ( lConfig->getAllRules().size(), TWO )
         << " Number of rules in file should be 1";
 }
-}} ::ColorTest
+}}
 

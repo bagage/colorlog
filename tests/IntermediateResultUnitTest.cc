@@ -191,5 +191,5 @@ TEST( IntermediateResultTest, SingleRule_Extended_Position )
 }
 
 
-}} ::ColorTest
+}}
 

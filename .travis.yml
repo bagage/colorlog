@@ -5,7 +5,7 @@ sudo: required
 dist: trusty
 
 install:
-    - sudo apt-get install -qq libgtest-dev libboost-regex-dev python3-pip cppcheck valgrind
+    - sudo apt-get install -qq libgtest-dev libboost-regex-dev python3-pip cppcheck valgrind ninja-build
     - sudo pip3 install meson
 
 script:

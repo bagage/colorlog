@@ -19,6 +19,7 @@
 #include "Rules.hh"
 
  // I very much prefer this to cryptic  FRIEND_TEST declarations
+#undef protected
 #define protected public
 // tested lib
 #include "RuleBox.hh"
@@ -36,7 +37,7 @@ TEST( RuleBox, MixOfRuleAndNumberRule )
     RuleBox::Ptr lRuleBox( new RuleBox );
 
     const uint8_t lLinesCount( 3 );
-    NumberRule::Ptr lRule1( new NumberRule( BROWN, lLinesCount ) );
+    NumberRule::Ptr lRule1( new NumberRule( YELLOW, lLinesCount ) );
     lRule1->addColor( CYAN );
     const std::string lRegex( "[0-9]+" );
     IRule::Ptr lRule2( new Rule( RED, lRegex ) );
@@ -66,7 +67,7 @@ TEST( RuleBox, OverlappingRules )
     const std::string lRegex1( "abcdef" )
                     , lRegex2( "defghijk" );
 
-    IRule::Ptr lRule1( new Rule( BROWN, lRegex1 ) );
+    IRule::Ptr lRule1( new Rule( YELLOW, lRegex1 ) );
     IRule::Ptr lRule2( new Rule( CYAN, lRegex2 ) );
 
     lRuleBox->addRule( lRule1 );
@@ -84,7 +85,7 @@ TEST( RuleBox, CombiningBoxes )
     // create some boxes and rules
     RuleBox::Ptr lRuleBox1( new RuleBox );
     RuleBox::Ptr lRuleBox2( new RuleBox );
-    IRule::Ptr lRule1( new Rule( BROWN, "" ) );
+    IRule::Ptr lRule1( new Rule( YELLOW, "" ) );
     IRule::Ptr lRule2( new Rule( RED, "" ) );
     IRule::Ptr lRule3( new Rule( GREEN, "" ) );
     lRuleBox1->addRule( lRule1 );
@@ -119,5 +120,5 @@ TEST( RuleBox, CombiningBoxes )
 
 }
 
-}} ::ColorTest
+}}
 
