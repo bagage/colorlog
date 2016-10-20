@@ -1,4 +1,4 @@
-project('colorlog', 'cpp', default_options : ['cpp_std=c++11'], meson_version: '>=0.36.0.dev1')
+project('colorlog', 'cpp', default_options : ['cpp_std=c++11'])
 if meson.get_compiler('cpp').get_id() != 'msvc'
     add_global_arguments('-std=c++11', language: 'cpp')
 endif
