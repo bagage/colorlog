@@ -14,13 +14,21 @@ int main( int argc, char** argv)
     try
     {
         // program can be invoked 2 different ways:
-        // 1) if colorlog is invoked via colorlog <executable>
+        // 1) if colorlog is invoked via colorlog <scheme> <executable>
         if (isatty(fileno(stdin))) {
-            //TODO: yet no parameter is read from colorlog so you cannot suggest scheme to use...
-            CLHandler handler( 1, argv );
-            lAppliedRules = handler.produceRules();
+            int child_idx = 2;
+            try {
+                // first try to parse the first argument as a possible <scheme>
+                CLHandler handler( 2, argv );
+                lAppliedRules = handler.produceRules();
+            } catch ( ...) {
+                // if the first argument is not a scheme, then it's the binary to launch
+                child_idx = 1;
+                CLHandler handler( 1, argv );
+                lAppliedRules = handler.produceRules();
+            }
 
-            PipedChild pc(argv[1], argc-1, &argv[1]);
+            PipedChild pc(argv[child_idx], argc - child_idx, &argv[child_idx]);
             int fd = pc.stdout;
             FILE* file = fdopen(fd, "r");
             if (file) {
@@ -35,7 +43,7 @@ int main( int argc, char** argv)
                     waitpid(pc.pid, &status, WNOHANG);
                 }
             }
-        // 2) if colorlog is invoked via pipe: <executable> | colorlog
+        // 2) if colorlog is invoked via pipe: <executable> | colorlog <scheme>
         } else {
             CLHandler handler( argc, argv );
             lAppliedRules = handler.produceRules();
