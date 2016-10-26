@@ -6,6 +6,7 @@ namespace Colorlog {
 
 enum ColorName {
     RESET = 0,
+    WIPEOUT, /* this is a special color which will remove from output instead of colorizing it */
     BLACK, BOLD_BLACK,
     RED, BOLD_RED,
     GREEN, BOLD_GREEN,
@@ -28,6 +29,7 @@ struct ColorStruct {
 
 static const ColorStruct supported_colors[] = {
     { "RESET",        RESET,       "\033[0;0m"      },
+    { "WIPEOUT",      WIPEOUT,     ""               },
     { "BLACK",        BLACK,       "\033[0;30m"     },
     { "BOLD_BLACK",   BOLD_BLACK,  "\033[1;30m"     },
     { "RED",          RED,         "\033[0;31m"     },

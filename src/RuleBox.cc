@@ -48,7 +48,7 @@ std::string RuleBox::process( const std::string& aText
     for ( size_t lIndex( 0 ) ; lIndex < aText.size() ; ++lIndex )
     {
         processLetter( lIndex, lColors, lOutput, lIResult, lCurrentColor );
-        lOutput << aText[ lIndex ];
+        if (lCurrentColor != WIPEOUT) lOutput << aText[ lIndex ];
     }
     if ( !lColors.empty() ) // loop might omit last sign
         lOutput << supported_colors[RESET].ascii_code;
