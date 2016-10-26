@@ -17,7 +17,8 @@ PipedChild::PipedChild(const char* szCommand, int aArgc, char** const aArguments
     //TODO: szCommand should not be colorlog itself - compare its value with /proc/self/exe
     // if szCommand is not a fullpath, find the executable in PATH
     char* cmd = realpath(szCommand, NULL);
-    if (!cmd || access( szCommand, F_OK ) == -1) {
+    bool is_relative = (strchr(szCommand, '/') != NULL);
+    if (!is_relative && (access( szCommand, F_OK ) == -1)) {
         char* paths = secure_getenv("PATH");
         char* it = paths;
         char* n = paths;
