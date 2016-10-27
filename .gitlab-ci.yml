@@ -21,6 +21,7 @@ test:
   stage: test
 
   script:
+    - cp data/colorlog.conf /etc/
     - ninja -C build cppcheckAll
     - ninja -C build test || (cat build/meson-logs/testlog.txt && exit 4)
     - ninja -C build test-valgrind || (cat build/meson-logs/testlog-valgrind.txt && exit 4)
