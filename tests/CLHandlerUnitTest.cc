@@ -118,7 +118,13 @@ TEST_P( CLHandlerTestWParam, regexp_arg )
     ASSERT_NO_THROW( lHandler.reset( new CLHandler( 3, lArgv ) ) );
 
     RuleBox::Ptr lReturned;
-    EXPECT_NO_THROW( lReturned = lHandler->produceRules() );
+    try {
+        lReturned = lHandler->produceRules();
+    } catch (const std::exception & err) {
+        std::cout << "oops: " << err.what() << std::endl;
+        EXPECT_EQ("no", "yes");
+    }
+    // EXPECT_NO_THROW( lReturned = lHandler->produceRules() );
 
     ASSERT_EQ( lReturned->m_Rules.size(), 1u );
     IRule::Ptr lRetIRule( lReturned->m_Rules.front() );
