@@ -11,7 +11,7 @@ build:
 
   script:
     - mkdir build
-    - python3 ~/.local/bin/meson.py build && ninja -C build all
+    - python3 ~/.local/bin/meson build && ninja -C build all
   artifacts:
     paths:
       - build/
