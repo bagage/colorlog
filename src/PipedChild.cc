@@ -37,7 +37,12 @@ PipedChild::PipedChild(const char* szCommand, int aArgc, char** const aArguments
         } while (n);
     }
     if (!cmd) {
-        perror("cannot find your executable");
+        if (is_relative) {
+            fprintf(stderr, "Cannot find your executable %s from %s: %s.\n",
+                szCommand, get_current_dir_name(), strerror(errno));
+        } else {
+            perror("cannot find your executable");
+        }
         return;
     }
 
