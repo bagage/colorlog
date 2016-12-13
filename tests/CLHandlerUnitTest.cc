@@ -55,14 +55,16 @@ TEST_F( CLHandlerTest, Construct_empty )
 {
     char* lArgv[] = { const_cast< char* >( "" ) };
     CLHandler::Ptr lHandler;
-    ASSERT_NO_THROW( lHandler.reset( new CLHandler( 0, lArgv ) ) );
+    int argc = 0;
+    ASSERT_NO_THROW( lHandler.reset( new CLHandler( &argc, lArgv ) ) );
 }
 
 TEST_F( CLHandlerTest, Construct_not_entirely_empty )
 {
     char* lArgv[] = { const_cast< char* >( "colorlog" ) };
     CLHandler::Ptr lHandler;
-    ASSERT_NO_THROW( lHandler.reset( new CLHandler( 1, lArgv ) ) );
+    int argc = 1;
+    ASSERT_NO_THROW( lHandler.reset( new CLHandler( &argc, lArgv ) ) );
 }
 
 TEST_F( CLHandlerTest, Construct_scheme_name_not_exists )
@@ -70,7 +72,8 @@ TEST_F( CLHandlerTest, Construct_scheme_name_not_exists )
     char* lArgv[] = { const_cast< char* >( "colorlog" )
                     , const_cast< char* >( "non_existent" ) };
     CLHandler::Ptr lHandler;
-    ASSERT_NO_THROW( lHandler.reset( new CLHandler( 2, lArgv ) ) );
+    int argc = 2;
+    ASSERT_NO_THROW( lHandler.reset( new CLHandler( &argc, lArgv ) ) );
     lHandler->setCustomBehaviour( m_ConfigFinder
                                 , m_ConfigCreator );
     MockConfig::Ptr lConfig( new MockConfig() );
@@ -89,7 +92,8 @@ TEST_F( CLHandlerTest, Construct_scheme_name_exists )
     char* lArgv[] = { const_cast< char* >( "colorlog" )
                     , const_cast< char* >( "gcc" ) };
     CLHandler::Ptr lHandler;
-    ASSERT_NO_THROW( lHandler.reset( new CLHandler( 2, lArgv ) ) );
+    int argc = 2;
+    ASSERT_NO_THROW( lHandler.reset( new CLHandler( &argc, lArgv ) ) );
     lHandler->setCustomBehaviour( m_ConfigFinder
                                 , m_ConfigCreator );
     MockConfig::Ptr lConfig( new MockConfig() );
@@ -115,7 +119,8 @@ TEST_P( CLHandlerTestWParam, regexp_arg )
                     , const_cast< char* >( REGEX )
     };
     CLHandler::Ptr lHandler;
-    ASSERT_NO_THROW( lHandler.reset( new CLHandler( 3, lArgv ) ) );
+    int argc = 3;
+    ASSERT_NO_THROW( lHandler.reset( new CLHandler( &argc, lArgv ) ) );
 
     RuleBox::Ptr lReturned;
     EXPECT_NO_THROW( lReturned = lHandler->produceRules() );
@@ -134,7 +139,8 @@ TEST_F( CLHandlerTest, two_schemes )
                     , const_cast< char* >( "gcc" )
                     , const_cast< char* >( "valgrind" ) };
     CLHandler::Ptr lHandler;
-    ASSERT_NO_THROW( lHandler.reset( new CLHandler( 3, lArgv ) ) );
+    int argc = 3;
+    ASSERT_NO_THROW( lHandler.reset( new CLHandler( &argc, lArgv ) ) );
     lHandler->setCustomBehaviour( m_ConfigFinder
                                 , m_ConfigCreator );
     MockConfig::Ptr lConfig( new MockConfig() );
@@ -169,7 +175,8 @@ TEST_F( CLHandlerTest, five_schemes )
                     , const_cast< char* >( "log" )
                     , const_cast< char* >( "valgrind" ) };
     CLHandler::Ptr lHandler;
-    ASSERT_NO_THROW( lHandler.reset( new CLHandler( 6, lArgv ) ) );
+    int argc = 6;
+    ASSERT_NO_THROW( lHandler.reset( new CLHandler( &argc, lArgv ) ) );
     lHandler->setCustomBehaviour( m_ConfigFinder
                                 , m_ConfigCreator );
     MockConfig::Ptr lConfig( new MockConfig() );
@@ -207,7 +214,8 @@ TEST_P( CLHandlerTestWParam, scheme_and_regex )
                     , const_cast< char* >( GetParam() )
                     , const_cast< char* >( REGEX ) };
     CLHandler::Ptr lHandler;
-    ASSERT_NO_THROW( lHandler.reset( new CLHandler( 4, lArgv ) ) );
+    int argc = 4;
+    ASSERT_NO_THROW( lHandler.reset( new CLHandler( &argc, lArgv ) ) );
     lHandler->setCustomBehaviour( m_ConfigFinder
                                 , m_ConfigCreator );
     MockConfig::Ptr lConfig( new MockConfig() );
@@ -238,7 +246,8 @@ TEST_P( CLHandlerTestWParam, regex_and_scheme )
                     , const_cast< char* >( REGEX )
                     , const_cast< char* >( "gcc" ) };
     CLHandler::Ptr lHandler;
-    ASSERT_NO_THROW( lHandler.reset( new CLHandler( 4, lArgv ) ) );
+    int argc = 4;
+    ASSERT_NO_THROW( lHandler.reset( new CLHandler( &argc, lArgv ) ) );
     lHandler->setCustomBehaviour( m_ConfigFinder
                                 , m_ConfigCreator );
     MockConfig::Ptr lConfig( new MockConfig() );
@@ -277,7 +286,8 @@ TEST_P( CLHandlerTestError, error_nonexistent_option )
                     , const_cast< char* >( REGEX )
                     , const_cast< char* >( "gcc" ) };
     CLHandler::Ptr lHandler;
-    ASSERT_NO_THROW( lHandler.reset( new CLHandler( 4, lArgv ) ) );
+    int argc = 4;
+    ASSERT_NO_THROW( lHandler.reset( new CLHandler( &argc, lArgv ) ) );
     EXPECT_THROW( lHandler->produceRules(), std::runtime_error );
 
 }

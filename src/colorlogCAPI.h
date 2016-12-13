@@ -15,11 +15,11 @@ extern "C"
 #endif
 /**
  * @brief Initialize colorlog with appropriate arguments
- * Should be called simirarly to command line args passed
+ * Should be called similarly to command line args passed
  * to binary of colorlog. If is not called, default arguments
  * will be assumed (mode syslog)
  **/
-void colorlog_init( int argc, char** argv );
+void colorlog_init( int *argc, char** argv );
 
 #ifdef __cplusplus
 extern "C"

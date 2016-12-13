@@ -16,16 +16,17 @@ int main( int argc, char** argv)
         // program can be invoked 2 different ways:
         // 1) if colorlog is invoked via colorlog <scheme> <executable>
         if (isatty(fileno(stdin))) {
-            int child_idx = 2;
+            int child_idx = argc;
+            CLHandler handler( &child_idx, argv );
+            lAppliedRules = handler.produceRules();
+
+            // if executable is a scheme name, use that
             try {
-                // first try to parse the first argument as a possible <scheme>
-                CLHandler handler( 2, argv );
-                lAppliedRules = handler.produceRules();
-            } catch ( ...) {
-                // if the first argument is not a scheme, then it's the binary to launch
-                child_idx = 1;
-                CLHandler handler( 1, argv );
-                lAppliedRules = handler.produceRules();
+                if (handler.handleCommand("--scheme", argv[child_idx], lAppliedRules)) {
+                    std::cout << "Will use '" << argv[child_idx] << "' scheme." << std::endl;
+                }
+            } catch (...) {
+                // just ignore it
             }
 
             PipedChild pc(argv[child_idx], argc - child_idx, &argv[child_idx]);
@@ -45,7 +46,7 @@ int main( int argc, char** argv)
             }
         // 2) if colorlog is invoked via pipe: <executable> | colorlog <scheme>
         } else {
-            CLHandler handler( argc, argv );
+            CLHandler handler( &argc, argv );
             lAppliedRules = handler.produceRules();
 
             std::string lLine;

@@ -26,22 +26,22 @@ class CLHandler
 
 
     public: /// functions
-        CLHandler( int aArgc, char* aArgv[] );
+        CLHandler( int* aArgc, char* aArgv[] );
         std::shared_ptr< RuleBox > produceRules();
 
         // used mainly for tests
         void setCustomBehaviour( ConfFinder& aConfFinder
                         , ConfigCreator& aConfigCreator );
 
+        bool handleCommand( const std::string& aCommand
+                          , const std::string& aValue
+                          , std::shared_ptr< RuleBox> & aCurrent );
     protected: /// functions
 
         void initConfiguration();
         bool isCommandLineOption( const std::string& aOpt );
         void addRuleBoxes( std::shared_ptr< RuleBox >& aCurrent
                          , const std::shared_ptr< RuleBox >& aAdded );
-        bool handleCommand( const std::string& aCommand
-                          , const std::string& aValue
-                          , std::shared_ptr< RuleBox> & aCurrent );
     protected: /// fields
         std::list< std::string > m_Args;
 
@@ -51,6 +51,7 @@ class CLHandler
         // used mainly for unit tests purposes
         ConfFinder m_ConfFinder;
         ConfigCreator m_ConfCreator;
+        int *m_ArgConsumed;
 
 }; // class CLHandler
 

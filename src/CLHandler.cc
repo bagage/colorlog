@@ -16,12 +16,11 @@ namespace Colorlog {
         return Config::Ptr( new Config( aConfFile ) );
     }
 
-    CLHandler::CLHandler( int aArgc, char* aArgv[] )
-        : m_ConfFinder( &findConfig )
-          , m_ConfCreator( &confCreator )
+    CLHandler::CLHandler( int *aArgc, char* aArgv[] )
+        : m_ConfFinder( &findConfig ), m_ConfCreator( &confCreator ), m_ArgConsumed(aArgc)
     {
         static const size_t OMIT_PROGRAM_NAME = 1;
-        for ( int lI( OMIT_PROGRAM_NAME ) ; lI < aArgc ; ++lI )
+        for ( int lI( OMIT_PROGRAM_NAME ) ; lI < *aArgc ; ++lI )
         {
             m_Args.push_back( aArgv[ lI ] );
         }
@@ -31,25 +30,33 @@ namespace Colorlog {
     {
         initConfiguration();
 
+        *m_ArgConsumed = m_Args.size();
+
         // read command line arguments
         RuleBox::Ptr lRules;
         while ( !m_Args.empty() )
         {
             std::string lArg( m_Args.front() );
             m_Args.pop_front();
+            std::string value = m_Args.size() > 0 ? std::string(m_Args.front()) : "";
 
             if ( !isCommandLineOption( lArg ) )
             {
-                addRuleBoxes( lRules, m_Conf->getRuleBox( lArg ) );
+                // abort now
+                break;
             }
-            else if ( handleCommand( lArg, m_Args.front(), lRules ) )
+            else if (handleCommand( lArg, value, lRules ))
             {
                 m_Args.pop_front();
             }
         }
+
+        *m_ArgConsumed -= m_Args.size();
+
         // if not found take first one
         if ( !lRules && m_Conf->getFirstRuleBox() )
             lRules = RuleBox::Ptr( m_Conf->getFirstRuleBox() );
+
         return lRules;
     }
 
@@ -94,7 +101,19 @@ namespace Colorlog {
             displayHelp();
             exit(0);
         }
-        else if ( aCommand == "-s" || aCommand == "--schemes" )
+        else if ( aCommand == "-s" || aCommand == "--scheme")
+        {
+            if ( !aValue.empty() ) {
+                addRuleBoxes( aCurrent, m_Conf->getRuleBox( aValue ) );
+                return true;
+            }
+            else
+            {
+                throw std::runtime_error( "Command line "
+                        "argument lacks value '" + aCommand + "'" );
+            }
+        }
+        else if ( aCommand == "-l" || aCommand == "--list" )
         {
             std::ifstream ifs;
             if (findConfig(ifs))
@@ -109,7 +128,7 @@ namespace Colorlog {
         }
         else if ( aCommand == "-r" || aCommand == "--regex" )
         {
-            if ( !m_Args.empty() )
+            if ( !aValue.empty() )
             {
                 RuleBox::Ptr lRegexBox( new RuleBox );
                 lRegexBox->addRule(

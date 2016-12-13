@@ -7,7 +7,7 @@
 ColorlogErrorCode g_Ret;
 Colorlog::RuleBox::Ptr g_AppliedRules;
 
-void colorlog_init( int argc, char** argv )
+void colorlog_init( int *argc, char** argv )
 {
     try
     {
@@ -24,7 +24,7 @@ void colorlog_init( int argc, char** argv )
             int lArgc = 2;
             char** lArgv = lArgs;
             g_Ret = INIT_NOT_CALLED_SETTINGS_DEFAULT;
-            Colorlog::CLHandler lHandler(lArgc, lArgv);
+            Colorlog::CLHandler lHandler(&lArgc, lArgv);
             g_AppliedRules = lHandler.produceRules();
         }
     }
