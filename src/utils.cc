@@ -10,7 +10,7 @@
 namespace Colorlog {
 
 const char* HOME_ENV_NAME = "HOME";
-const std::string COLORLOG_HOME_CONF_DIR = "/.colorlog/"
+const std::string COLORLOG_HOME_CONF_FILENAME = "/.colorlog.conf"
     , COLORLOG_CONF_FILENAME = "colorlog.conf"
     , COLORLOG_CONF_DIR = "/etc/";
 
@@ -43,7 +43,7 @@ std::string getHomePath()
 std::string getHomeConfigPath()
 {
     std::string lHomePath( getHomePath() );
-    return std::string( lHomePath + COLORLOG_HOME_CONF_DIR + COLORLOG_CONF_FILENAME );
+    return std::string( lHomePath + COLORLOG_HOME_CONF_FILENAME );
 }
 
 bool findConfig( std::ifstream& aStr )
