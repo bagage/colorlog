@@ -1,3 +1,5 @@
 #compdef colorlog
 
-compadd "$@" - $(colorlog --schemes)
+_arguments "1:scheme to use for parsing text:(--scheme)" \
+            "2:scheme:($(colorlog --list))" \
+            "::executable to launch:_files"
